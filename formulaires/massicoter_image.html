@@ -1,0 +1,27 @@
+<form method="post" action="#ENV{action}" enctype="multipart/form-data">
+  <div>
+	  [(#REM) declarer les hidden qui declencheront le service du formulaire 
+	          parametre : url d'action ]
+	  #ACTION_FORMULAIRE{#ENV{action}}
+	  
+    <div id="zoom-slider"></div>
+
+	  <ul>
+		  #GENERER_SAISIES{#ENV{_saisies}}
+	  </ul>
+	  
+	  [(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+	  <!--extra-->
+	  
+	  <p class="boutons">
+		  <span class="image_loading"></span>
+		  <input type="submit" class="submit" value="[(#ENV{saisies_texte_submit}|sinon{<:bouton_enregistrer:>})]" />
+	  </p>
+  </div>
+</form>
+
+<script type="text/javascript">
+ $(function () {
+   $('#zoom-slider').slider();
+ });
+</script>

@@ -29,4 +29,6 @@
   <lib nom="jquery.imgareaselect.js" lien="https://github.com/odyniec/imgareaselect/archive/master.zip" />
 
   <necessite nom="medias" />
+  <necessite nom="saisies" />
+
 </paquet>

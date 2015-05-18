@@ -1,3 +1,9 @@
-<h1><:massicot:massicoter:> [(#OBJET|=={document}|?{Document #ID_OBJET, Logo #OBJET #ID_OBJET})]</h1>
+<h1><:massicot:massicoter:> [(#ENV{objet}|=={document}|?{Document #ENV{id_objet}, Logo #ENV{objet} #ENV{id_objet}})]</h1>
 
 #FORMULAIRE_MASSICOTER_IMAGE{#OBJET, #ID_OBJET, #ENV{redirect}}
+
+<div class="image_massicot">
+  <BOUCLE_doc(DOCUMENTS) {si #OBJET|=={document}} {id_document = #ID_OBJET}>
+    [(#FICHIER|balise_img)]
+  </BOUCLE_doc>
+</div>
