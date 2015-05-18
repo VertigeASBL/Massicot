@@ -24,4 +24,5 @@
   <pipeline nom="declarer_tables_principales" inclure="base/massicot.php" />
   <pipeline nom="declarer_tables_auxiliaires" inclure="base/massicot.php" />
 
+  <lib nom="jquery.imgareaselect.js" lien="https://github.com/odyniec/imgareaselect/archive/master.zip" />
 </paquet>
