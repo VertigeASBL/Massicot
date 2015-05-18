@@ -22,10 +22,12 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return void
 **/
 function massicot_upgrade($nom_meta_base_version, $version_cible) {
-	$maj = array();
+    $maj = array();
 
-	include_spip('base/upgrade');
-	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+    $maj['create'] = array(array('maj_tables', array('spip_massicotages', 'spip_massicotages_liens')));
+
+    include_spip('base/upgrade');
+    maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
 
 
@@ -38,8 +40,8 @@ function massicot_upgrade($nom_meta_base_version, $version_cible) {
 **/
 function massicot_vider_tables($nom_meta_base_version) {
 
+    sql_drop_table("spip_massicotages");
+    sql_drop_table("spip_massicotages_liens");
 
-	effacer_meta($nom_meta_base_version);
+    effacer_meta($nom_meta_base_version);
 }
-
-?>
