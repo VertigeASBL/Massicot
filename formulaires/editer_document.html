@@ -54,6 +54,11 @@
             [(#MODELE{doc,id_document=#ENV{id_document,''},hauteur=200,largeur=300}|extraire_balise{a})]
             })]
         ]
+        [(#MEDIA|=={image}|oui)
+          <a href="#URL_ECRIRE{massicoter_image, objet=document&id_objet=#ID_DOCUMENT}">
+            massicoter l'image
+          </a>
+        ]
       </li>
       <li class="editer editer_infos">
         <label><:medias:label_caracteristiques:></label>
