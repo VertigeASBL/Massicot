@@ -29,25 +29,25 @@ function formulaires_massicoter_image_saisies_dist ($objet, $id_objet, $redirect
         array(
             'saisie' => 'hidden',
             'options' => array(
-                'nom' => 'x',
+                'nom' => 'x1',
             ),
         ),
         array(
             'saisie' => 'hidden',
             'options' => array(
-                'nom' => 'xx',
+                'nom' => 'x2',
             ),
         ),
         array(
             'saisie' => 'hidden',
             'options' => array(
-                'nom' => 'y',
+                'nom' => 'y1',
             ),
         ),
         array(
             'saisie' => 'hidden',
             'options' => array(
-                'nom' => 'yy',
+                'nom' => 'y2',
             ),
         ),
     );
@@ -72,10 +72,10 @@ function formulaires_massicoter_image_charger_dist ($objet, $id_objet, $redirect
 
     $valeurs = array(
         'zoom' => 1,
-        'x'    => 0,
-        'xx'   => $width,
-        'y'    => 0,
-        'yy'   => $height,
+        'x1'    => 0,
+        'x2'   => $width,
+        'y1'    => 0,
+        'y2'   => $height,
     );
 
     return $valeurs;
@@ -93,10 +93,10 @@ function formulaires_massicoter_image_traiter_dist ($objet, $id_objet, $redirect
 
     $parametres = array(
         'zoom' => _request('zoom'),
-        'x1' => _request('x'),
-        'x2' => _request('xx'),
-        'y1' => _request('y'),
-        'y2' => _request('yy'),
+        'x1'   => _request('x1'),
+        'x2'   => _request('x2'),
+        'y1'   => _request('y1'),
+        'y2'   => _request('y2'),
     );
 
     if ($err = massicot_enregistrer($objet, $id_objet, $parametres)) {

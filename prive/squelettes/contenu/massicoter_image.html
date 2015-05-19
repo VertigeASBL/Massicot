@@ -17,10 +17,10 @@
 
    /* Gestion du recadrage */
    function maj_formulaire (img, selection) {
-     $('input[name=x]') .attr('value', selection.x1);
-     $('input[name=xx]').attr('value', selection.x2);
-     $('input[name=y]') .attr('value', selection.y1);
-     $('input[name=yy]').attr('value', selection.y2);
+     $('input[name=x1]').attr('value', selection.x1);
+     $('input[name=x2]').attr('value', selection.x2);
+     $('input[name=y1]').attr('value', selection.y1);
+     $('input[name=y2]').attr('value', selection.y2);
    }
 
    imgAreaSelector = img.imgAreaSelect({
@@ -28,10 +28,10 @@
      handles: true,
      show: true,
      onSelectEnd: maj_formulaire,
-     x1: $('input[name=x]') .attr('value'),
-     x2: $('input[name=xx]').attr('value'),
-     y1: $('input[name=y]') .attr('value'),
-     y2: $('input[name=yy]').attr('value')
+     x1: $('input[name=x1]').attr('value'),
+     x2: $('input[name=x2]').attr('value'),
+     y1: $('input[name=y1]').attr('value'),
+     y2: $('input[name=y2]').attr('value')
    });
 
    /* Une fonction qui agrandi ou rapetisse l'image */
