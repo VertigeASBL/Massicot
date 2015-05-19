@@ -2,8 +2,29 @@
 
 #FORMULAIRE_MASSICOTER_IMAGE{#OBJET, #ID_OBJET, #ENV{redirect}}
 
-<div class="image_massicot">
+<div class="image-massicot">
   <BOUCLE_doc(DOCUMENTS) {si #OBJET|=={document}} {id_document = #ID_OBJET}>
     [(#FICHIER|balise_img)]
   </BOUCLE_doc>
 </div>
+
+<script type="text/javascript">
+ $(function () {
+
+   /* Une fonction qui agrandi ou rapetisse l'image */
+   function zoomer_image_massicot (valeur) {
+     $('.image-massicot img')
+        .css('width', valeur * 100 + '%')
+        .css('height', 'auto');
+   }
+
+   /* la valeur du zoom agit sur l'image */
+   $('input#champ_zoom').change(function (e) {
+     zoomer_image_massicot($(this).attr('value'));
+   });
+
+   /* initialiser le zoom */
+   $('input#champ_zoom').trigger('change');
+
+ });
+</script>

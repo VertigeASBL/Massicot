@@ -22,6 +22,15 @@
 
 <script type="text/javascript">
  $(function () {
-   $('#zoom-slider').slider();
+   /* Créer le slider et l'associer à l'input */
+   $('#zoom-slider').slider({
+     max: 2,
+     min: .01,
+     value: #ENV{zoom},
+     step: .01,
+     slide: function ( event, ui ) {
+       $('input#champ_zoom').attr('value', ui.value).trigger('change');
+     }
+   });
  });
 </script>
