@@ -5,8 +5,10 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
-    'massicoter' => "Recadrer l'image : ",
+    // E
+    'erreur_parametre_manquant' => "Le paramètre @parametre@ est obligatoire !",
 
 	// M
 	'massicot_titre' => 'Massicot',
+    'massicoter' => "Recadrer l'image : ",
 );

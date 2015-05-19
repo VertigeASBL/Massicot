@@ -65,27 +65,20 @@ function formulaires_massicoter_image_saisies_dist ($objet, $id_objet, $redirect
  */
 function formulaires_massicoter_image_charger_dist ($objet, $id_objet, $redirect) {
 
-    // TODO
-    $valeurs = array();
+    $chemin_image = massicot_chemin_image($objet, $id_objet);
+    list($width, $height) = getimagesize($chemin_image);
+
+    // TODO prendre en compte un éventuel massicotage existant
+
+    $valeurs = array(
+        'zoom' => 1,
+        'x'    => 0,
+        'xx'   => $width,
+        'y'    => 0,
+        'yy'   => $height,
+    );
 
     return $valeurs;
-}
-
-/**
- * Vérifications du formulaire de massicotage
- *
- * Vérifier les champs postés et signaler d'éventuelles erreurs
- *
- * @return array
- *     Tableau des erreurs
- */
-function formulaires_massicoter_image_verifier_dist ($objet, $id_objet, $redirect) {
-
-    // TODO
-    $erreurs = array();
-
-    return $erreurs;
-
 }
 
 /**
@@ -98,8 +91,15 @@ function formulaires_massicoter_image_verifier_dist ($objet, $id_objet, $redirec
  */
 function formulaires_massicoter_image_traiter_dist ($objet, $id_objet, $redirect) {
 
-    // TODO
-    $retour = array();
+    $parametres = array(
+        'zoom' => _request('zoom'),
+        'x1' => _request('x'),
+        'x2' => _request('xx'),
+        'y1' => _request('y'),
+        'y2' => _request('yy'),
+    );
 
-    return $retour;
+    if ($err = massicot_enregistrer($objet, $id_objet, $parametres)) {
+        spip_log($err, 'massicot.'._LOG_ERREUR);
+    }
 }
