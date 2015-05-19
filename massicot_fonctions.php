@@ -102,10 +102,12 @@ function massicot_get_parametres ($objet, $id_objet) {
 
     include_spip('base/abstract_sql');
 
-    $traitements = sql_getfetsel('traitements',
-                                    'spip_massicotages as M INNER JOIN spip_massicotages_liens as L ON M.id_massicotage=L.id_massicotage',
-                                    array('L.objet='.sql_quote($objet),
-                                          'L.id_objet='.intval($id_objet)));
+    $traitements = sql_getfetsel(
+        'traitements',
+        'spip_massicotages as M' .
+        ' INNER JOIN spip_massicotages_liens as L ON M.id_massicotage=L.id_massicotage',
+        array('L.objet='.sql_quote($objet),
+              'L.id_objet='.intval($id_objet)));
 
     if ($traitements) {
         return unserialize($traitements);
