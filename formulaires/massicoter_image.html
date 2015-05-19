@@ -24,7 +24,9 @@
  $(function () {
    /* Créer le slider et l'associer à l'input */
    $('#zoom-slider').slider({
-     max: 2,
+     /* SPIP ne propose pas de traitement d'image pour agrandir, alors
+        pour l'instant on ne le permet pas… */
+     max: 1,
      min: .01,
      value: #ENV{zoom},
      step: .01,

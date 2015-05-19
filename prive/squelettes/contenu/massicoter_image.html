@@ -4,7 +4,7 @@
 
 <div class="image-massicot">
   <BOUCLE_doc(DOCUMENTS) {si #OBJET|=={document}} {id_document = #ID_OBJET}>
-    [(#FICHIER|balise_img)]
+    [(#FICHIER*|get_spip_doc|balise_img)]
   </BOUCLE_doc>
 </div>
 

@@ -121,3 +121,53 @@ function massicot_get_parametres ($objet, $id_objet) {
         );
     }
 }
+
+/**
+ * Massicoter un document
+ *
+ * @param string $fichier : Le fichier du document
+ *
+ * @return string : Un fichier massicoté
+ */
+function massicoter_document ($fichier) {
+
+    include_spip('base/abstract_sql');
+    include_spip('inc/documents');
+    include_spip('inc/filtres_images_mini');
+    include_spip('filtres/images_transforme');
+
+    $parametres = sql_getfetsel(
+        'traitements',
+        'spip_massicotages as M' .
+        ' INNER JOIN spip_massicotages_liens as L ON L.id_massicotage = M.id_massicotage' .
+        ' INNER JOIN spip_documents as D ON (D.id_document = L.id_objet AND L.objet="document")',
+        'D.fichier='.sql_quote(set_spip_doc($fichier)));
+
+    $parametres = unserialize($parametres);
+
+    list($width, $height) = getimagesize($fichier);
+
+    $fichier = extraire_attribut(
+        image_reduire($fichier,
+                      $parametres['zoom'] * $width,
+                      $parametres['zoom'] * $height),
+        'src');
+
+    list($width, $height) = getimagesize($fichier);
+
+    $fichier = extraire_attribut(
+        image_recadre($fichier,
+                      $width  - $parametres['x1'],
+                      $height - $parametres['y1'],
+                      'bottom right'),
+        'src');
+
+    $fichier = extraire_attribut(
+        image_recadre($fichier,
+                      $parametres['x2'] - $parametres['x1'],
+                      $parametres['y2'] - $parametres['y1'],
+                      'top left'),
+        'src');
+
+    return $fichier;
+}

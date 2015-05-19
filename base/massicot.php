@@ -22,6 +22,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function massicot_declarer_tables_interfaces($interfaces) {
 
+    $interfaces['table_des_traitements']['FICHIER']['documents'] =
+      'massicoter_document(' . $interfaces['table_des_traitements']['FICHIER']['documents'] . ')';
+
     return $interfaces;
 }
 
