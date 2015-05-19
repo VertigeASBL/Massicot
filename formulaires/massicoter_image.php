@@ -68,17 +68,9 @@ function formulaires_massicoter_image_charger_dist ($objet, $id_objet, $redirect
     $chemin_image = massicot_chemin_image($objet, $id_objet);
     list($width, $height) = getimagesize($chemin_image);
 
-    // TODO prendre en compte un éventuel massicotage existant
+    $parametres = massicot_get_parametres($objet, $id_objet);
 
-    $valeurs = array(
-        'zoom' => 1,
-        'x1'    => 0,
-        'x2'   => $width,
-        'y1'    => 0,
-        'y2'   => $height,
-    );
-
-    return $valeurs;
+    return $parametres;
 }
 
 /**
