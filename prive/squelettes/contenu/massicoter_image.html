@@ -11,12 +11,35 @@
 <script type="text/javascript">
  $(function () {
 
+   var img = $('.image-massicot img'),
+       imgAreaSelector;
+
+   /* Gestion du recadrage */
+   function maj_formulaire (img, selection) {
+     $('input[name=x]') .attr('value', selection.x1);
+     $('input[name=xx]').attr('value', selection.x2);
+     $('input[name=y]') .attr('value', selection.y1);
+     $('input[name=yy]').attr('value', selection.y2);
+   }
+
+   imgAreaSelector = img.imgAreaSelect({
+     instance: true,
+     handles: true,
+     show: true,
+     onSelectEnd: maj_formulaire,
+     x1: $('input[name=x]') .attr('value'),
+     x2: $('input[name=xx]').attr('value'),
+     y1: $('input[name=y]') .attr('value'),
+     y2: $('input[name=yy]').attr('value')
+   });
+
    /* Une fonction qui agrandi ou rapetisse l'image */
    function zoomer_image_massicot (valeur) {
-     $('.image-massicot img')
+     img
         .css('width', valeur * 100 + '%')
         .css('height', 'auto')
         .css('margin-left', '-' + ((valeur * 100) - 100) / 2 + '%' );
+     imgAreaSelector.update();
    }
 
    /* la valeur du zoom agit sur l'image */

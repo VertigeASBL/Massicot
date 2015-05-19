@@ -11,6 +11,21 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+
+/**
+ * Insérer le plugin jquery de selection du cadre
+ *
+ * @pipeline jquery_plugins
+ * @param  array $scripts  Les scripts qui seront insérés dans la page
+ * @return array       La liste des scripts complétée
+ */
+function massicot_jquery_plugins ($scripts) {
+
+    $scripts[] = find_in_path('lib/jquery.imgareaselect.js/jquery.imgareaselect.dev.js');
+
+    return $scripts;
+}
+
 /**
  * Ajoute le plugins jqueryui Slider
  *
@@ -25,7 +40,6 @@ function massicot_jqueryui_plugins ($scripts) {
     return $scripts;
 }
 
-
 /**
  * Ajouter un brin de CSS
  *
@@ -35,7 +49,11 @@ function massicot_jqueryui_plugins ($scripts) {
  */
 function massicot_header_prive ($flux) {
 
-    $flux .= '<link rel="stylesheet" href="' . find_in_path('css/massicot.css') . '" type="text/css" media="all" />';
+    $flux .= '<link rel="stylesheet" type="text/css" media="screen" href="' .
+          find_in_path('css/massicot.css') . '" />';
+
+    $flux .= '<link rel="stylesheet" type="text/css" media="screen" href="' .
+        find_in_path('lib/jquery.imgareaselect.js/distfiles/css/imgareaselect-default.css') . '" />';
 
     return $flux;
 }
