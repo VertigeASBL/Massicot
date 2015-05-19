@@ -15,7 +15,8 @@
    function zoomer_image_massicot (valeur) {
      $('.image-massicot img')
         .css('width', valeur * 100 + '%')
-        .css('height', 'auto');
+        .css('height', 'auto')
+        .css('margin-left', '-' + ((valeur * 100) - 100) / 2 + '%' );
    }
 
    /* la valeur du zoom agit sur l'image */

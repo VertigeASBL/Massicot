@@ -10,7 +10,7 @@
  */
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
-	
+
 /**
  * Ajoute le plugins jqueryui Slider
  *
@@ -23,4 +23,19 @@ function massicot_jqueryui_plugins ($scripts) {
     $scripts[] = 'jquery.ui.slider';
 
     return $scripts;
+}
+
+
+/**
+ * Ajouter un brin de CSS
+ *
+ * @pipeline header_prive
+ * @param  array $flux Données du pipeline
+ * @return array       Données du pipeline
+ */
+function massicot_header_prive ($flux) {
+
+    $flux .= '<link rel="stylesheet" href="' . find_in_path('css/massicot.css') . '" type="text/css" media="all" />';
+
+    return $flux;
 }
