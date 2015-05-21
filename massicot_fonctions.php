@@ -197,6 +197,11 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
         return $logo;
     }
 
+    /* S'il y a un lien sur le logo, on le met de côté */
+    if (preg_match('#(<a.*?>)<img.*$#', $logo) === 1) {
+        $lien = preg_replace('#(<a.*?>)<img.*$#', '$1', $logo);
+    }
+
     list($largeur_logo, $hauteur_logo) =
         getimagesize(extraire_attribut($logo, 'src'));
 
@@ -208,6 +213,14 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
        paramètres de la balise LOGO_, il faut s'assurer que l'image
        qu'on renvoie fait bien la même taille que le logo qu'on a
        reçu. */
-    return image_reduire($balise_img($fichier_massicote),
-                         $largeur_logo, $hauteur_logo);
+    $balise = image_reduire($balise_img($fichier_massicote),
+                            $largeur_logo, $hauteur_logo);
+
+    $balise = inserer_attribut($balise, 'class', 'spip_logos');
+
+    if ($lien) {
+        $balise = $lien . $balise . '</a>';
+    }
+
+    return $balise;
 }
