@@ -193,7 +193,10 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
     include_spip('inc/filtres_images_mini');
 
     /* Si le document en question n'est pas une image, on ne fait rien */
-    if (isset($doc['media']) AND ($doc['media'] !== 'image')) {
+    if (( ! $logo) OR
+        (isset($doc['mode'])) AND ($doc['mode'] !== 'image') OR
+        (isset($doc['media']) AND ($doc['media'] !== 'image'))) {
+
         return $logo;
     }
 
