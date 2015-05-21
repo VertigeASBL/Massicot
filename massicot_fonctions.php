@@ -99,7 +99,7 @@ function massicot_enregistrer ($objet, $id_objet, $parametres) {
  * Retourne les paramètres de massicotage d'une image
  *
  * S'il n'y a pas de massicotage défini pour cet objet, on retourne
- * des valeurs par défaut, qui produisent un massicotage qui ne fait rien.
+ * un tableau vide.
  *
  * @param string $objet : le type d'objet
  * @param integer $id_objet : l'identifiant de l'objet
@@ -120,15 +120,7 @@ function massicot_get_parametres ($objet, $id_objet) {
     if ($traitements) {
         return unserialize($traitements);
     } else {
-        $chemin_image = massicot_chemin_image($objet, $id_objet);
-        list($width, $height) = getimagesize($chemin_image);
-        return array(
-            'zoom' => 1,
-            'x1'   => 0,
-            'x2'   => $width,
-            'y1'   => 0,
-            'y2'   => $height,
-        );
+        return array();
     }
 }
 
