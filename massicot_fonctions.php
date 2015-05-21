@@ -37,8 +37,10 @@ function massicot_chemin_image ($objet, $id_objet) {
     } else {
 
         $chercher_logo = charger_fonction('chercher_logo', 'inc');
-        return array_shift(
-            $chercher_logo($id_objet, id_table_objet($objet), 'on'));
+        $logo = $chercher_logo($id_objet, id_table_objet($objet), 'on');
+        if (is_array($logo)) {
+            return array_shift($logo);
+        }
     }
 }
 
@@ -131,42 +133,9 @@ function massicot_get_parametres ($objet, $id_objet) {
 }
 
 /**
- * Massicoter un document
- *
- * @param string $fichier : Le fichier du document
- *
- * @return string : Un fichier massicoté
- */
-function massicoter_document ($fichier) {
-
-    include_spip('base/abstract_sql');
-    include_spip('inc/documents');
-
-    $parametres = sql_getfetsel(
-        'traitements',
-        'spip_massicotages as M' .
-        ' INNER JOIN spip_massicotages_liens as L ON L.id_massicotage = M.id_massicotage' .
-        ' INNER JOIN spip_documents as D ON (D.id_document = L.id_objet AND L.objet="document")',
-        'D.fichier='.sql_quote(set_spip_doc($fichier)));
-
-    return massicoter_fichier($fichier, unserialize($parametres));
-}
-
-/**
- * Massicoter un objet
- *
- * @param string $fichier : Le fichier à massicoter
- * @param string $objet : Le type d'objet
- * @param string $id_obejt : L'identifiant de l'objet
- *
- * @return string : Un fichier massicoté
- */
-function massicoter_objet ($fichier, $objet, $id_objet) {
-
-    return massicoter_fichier($fichier, massicot_get_parametres($objet, $id_objet));
-}
-/**
  * Massicoter un fichier image
+ *
+ * La fonction générale qui d'occupe du recadrage des images
  *
  * @param string $fichier : Le fichier
  * @param array $parametres : le tableau des paramètres de massicotage
@@ -216,7 +185,51 @@ function massicoter_fichier ($fichier, $parametres) {
 }
 
 /**
+ * Massicoter un document
+ *
+ * À utiliser comme filtre sur les balises #FICHIER ou #URL_DOCUMENT
+ *
+ * @param string $fichier : Le fichier du document
+ *
+ * @return string : Un fichier massicoté
+ */
+function massicoter_document ($fichier) {
+
+    include_spip('base/abstract_sql');
+    include_spip('inc/documents');
+
+    $parametres = sql_getfetsel(
+        'traitements',
+        'spip_massicotages as M' .
+        ' INNER JOIN spip_massicotages_liens as L ON L.id_massicotage = M.id_massicotage' .
+        ' INNER JOIN spip_documents as D ON (D.id_document = L.id_objet AND L.objet="document")',
+        'D.fichier='.sql_quote(set_spip_doc($fichier)));
+
+    return massicoter_fichier($fichier, unserialize($parametres));
+}
+
+/**
+ * Massicoter un objet
+ *
+ * À utiliser comme filtre sur les balises #LOGO_*. Pour les balises
+ * #LOGO_DOCUMENT, il faut utiliser la fonction
+ * massicoter_logo_document
+ *
+ * @param string $fichier : Le fichier à massicoter
+ * @param string $objet : Le type d'objet
+ * @param string $id_obejt : L'identifiant de l'objet
+ *
+ * @return string : Un fichier massicoté
+ */
+function massicoter_objet ($fichier, $objet, $id_objet) {
+
+    return massicoter_fichier($fichier, massicot_get_parametres($objet, $id_objet));
+}
+
+/**
  * Massicoter un logo document
+ *
+ * Traitement automatique sur les balises #LOGO_DOCUMENT
  *
  * @param string $fichier : Le logo
  *
@@ -235,7 +248,8 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
         return $logo;
     }
 
-    /* S'il y a un lien sur le logo, on le met de côté */
+    /* S'il y a un lien sur le logo, on le met de côté pour le
+       remettre après massicotage */
     if (preg_match('#(<a.*?>)<img.*$#', $logo) === 1) {
         $lien = preg_replace('#(<a.*?>)<img.*$#', '$1', $logo);
     }
@@ -251,8 +265,9 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
        paramètres de la balise LOGO_, il faut s'assurer que l'image
        qu'on renvoie fait bien la même taille que le logo qu'on a
        reçu. */
-    $balise = image_reduire($balise_img($fichier_massicote, '', 'spip_logos'),
-                            $largeur_logo, $hauteur_logo);
+    $balise = image_reduire(
+        $balise_img($fichier_massicote, '', 'spip_logos'),
+        $largeur_logo, $hauteur_logo);
 
     if ($lien) {
         $balise = $lien . $balise . '</a>';
@@ -263,6 +278,8 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
 
 /**
  * Massicoter un logo
+ *
+ * Traitement automatique sur les balises #LOGO_*
  *
  * @param string $fichier : Le logo
  *
