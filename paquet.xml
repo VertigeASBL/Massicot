@@ -2,7 +2,7 @@
 	prefix="massicot"
 	categorie="multimedia"
 	version="0.1.0"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.0.17;3.0.*]"
 	logo=""
 	documentation=""
