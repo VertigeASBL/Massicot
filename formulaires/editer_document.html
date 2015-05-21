@@ -55,7 +55,7 @@
             })]
         ]
         [(#MEDIA|=={image}|oui)
-          <a href="#URL_ECRIRE{massicoter_image, objet=document&id_objet=#ID_DOCUMENT}">
+          <a href="[(#URL_ECRIRE{massicoter_image, objet=document&id_objet=#ID_DOCUMENT}|parametre_url{redirect,#SELF})]">
             massicoter l'image
           </a>
         ]

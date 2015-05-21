@@ -94,4 +94,8 @@ function formulaires_massicoter_image_traiter_dist ($objet, $id_objet, $redirect
     if ($err = massicot_enregistrer($objet, $id_objet, $parametres)) {
         spip_log($err, 'massicot.'._LOG_ERREUR);
     }
+
+    return array(
+        'redirect' => $redirect,
+    );
 }
