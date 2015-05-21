@@ -28,11 +28,17 @@ function massicot_chemin_image ($objet, $id_objet) {
     include_spip('base/objets');
 
     if (objet_type($objet) === 'document') {
-        $fichier = sql_getfetsel('fichier', 'spip_documents', 'id_document='.intval($id_objet));
-        return $fichier ? find_in_path(_NOM_PERMANENTS_ACCESSIBLES . $fichier) : '';
+
+        $fichier = sql_getfetsel('fichier', 'spip_documents',
+                                 'id_document='.intval($id_objet));
+        return $fichier ?
+            find_in_path(_NOM_PERMANENTS_ACCESSIBLES . $fichier) : '';
+
     } else {
-        // TODO gestion des logos
-        return '';
+
+        $chercher_logo = charger_fonction('chercher_logo', 'inc');
+        return array_shift(
+            $chercher_logo($id_objet, id_table_objet($objet), 'on'));
     }
 }
 

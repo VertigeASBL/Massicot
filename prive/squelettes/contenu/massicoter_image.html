@@ -3,9 +3,7 @@
 #FORMULAIRE_MASSICOTER_IMAGE{#OBJET, #ID_OBJET, #ENV{redirect}}
 
 <div class="image-massicot">
-  <BOUCLE_doc(DOCUMENTS) {si #OBJET|=={document}} {id_document = #ID_OBJET}>
-    [(#FICHIER*|get_spip_doc|balise_img)]
-  </BOUCLE_doc>
+  [(#ENV{objet}|massicot_chemin_image{#ENV{id_objet}}|balise_img)]
 </div>
 
 <script type="text/javascript">

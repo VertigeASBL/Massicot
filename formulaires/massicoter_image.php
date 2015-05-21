@@ -65,9 +65,6 @@ function formulaires_massicoter_image_saisies_dist ($objet, $id_objet, $redirect
  */
 function formulaires_massicoter_image_charger_dist ($objet, $id_objet, $redirect) {
 
-    $chemin_image = massicot_chemin_image($objet, $id_objet);
-    list($width, $height) = getimagesize($chemin_image);
-
     $parametres = massicot_get_parametres($objet, $id_objet);
 
     return $parametres;
