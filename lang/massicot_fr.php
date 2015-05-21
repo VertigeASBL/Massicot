@@ -11,4 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'massicot_titre' => 'Massicot',
     'massicoter' => "Recadrer l'image : ",
+
+    // Z
+    'zoom' => 'Zoom',
 );
