@@ -145,6 +145,11 @@ function massicoter_document ($fichier) {
         ' INNER JOIN spip_documents as D ON (D.id_document = L.id_objet AND L.objet="document")',
         'D.fichier='.sql_quote(set_spip_doc($fichier)));
 
+    /* ne rien faire s'il n'y a pas de massicotage défini */
+    if ( ! $parametres) {
+        return $fichier;
+    }
+
     $parametres = unserialize($parametres);
 
     list($width, $height) = getimagesize($fichier);
