@@ -45,7 +45,7 @@
           <input class="image" type="image" name="tournerR90" src="#CHEMIN_IMAGE{tourner-droite-12.png}" alt="<:medias:image_tourner_droite:>" />
           <input class="image" type="image" name="tourner180" src="#CHEMIN_IMAGE{tourner-180-12.png}" alt="<:medias:image_tourner_180:>" />
         </div>
-        [<a href='#ENV{apercu}'>(#ENV{apercu}|image_reduire{300,200})</a>]
+        [<a href='#ENV{apercu}'>(#ENV{apercu}|massicoter_document|image_reduire{300,200})</a>]
         ]
         [(#ENV{apercu}|non)
           [(#ENV**{_inclus}|=={embed}|?{
