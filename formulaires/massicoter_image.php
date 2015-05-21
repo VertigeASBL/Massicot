@@ -67,6 +67,12 @@ function formulaires_massicoter_image_charger_dist ($objet, $id_objet, $redirect
 
     $parametres = massicot_get_parametres($objet, $id_objet);
 
+    if ( ! $parametres) {
+        $parametres = array(
+            'zoom' => 1,
+        );
+    }
+
     return $parametres;
 }
 

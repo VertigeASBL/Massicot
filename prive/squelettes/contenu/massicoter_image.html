@@ -34,15 +34,28 @@
 
    /* Une fonction pour mettre à jour la sélection lorsqu'on zoom */
    function maj_selection (new_zoom, zoom) {
-     var selection_actuelle = {
-       x1: $('input[name=x1]').attr('value'),
-       x2: $('input[name=x2]').attr('value'),
-       y1: $('input[name=y1]').attr('value'),
-       y2: $('input[name=y2]').attr('value')
-     },
+
+     var selection_actuelle = {},
          nouvelle_selection = {};
 
+     if ( ! $('input[name=x1]').attr('value')) {
+       selection_actuelle = {
+         x1: 0,
+         x2: img.attr('width'),
+         y1: 0,
+         y2: img.attr('height')
+       };
+     } else {
+       selection_actuelle = {
+         x1: $('input[name=x1]').attr('value'),
+         x2: $('input[name=x2]').attr('value'),
+         y1: $('input[name=y1]').attr('value'),
+         y2: $('input[name=y2]').attr('value')
+       };
+     }
+
      if ( ! imgAreaSelector) {
+
        imgAreaSelector = img.imgAreaSelect({
          instance: true,
          handles: true,
@@ -53,7 +66,10 @@
          y1: selection_actuelle.y1,
          y2: selection_actuelle.y2,
        });
+       maj_formulaire(img, selection_actuelle);
+
      } else {
+
        nouvelle_selection.x1 = Math.round(selection_actuelle.x1 / zoom * new_zoom);
        nouvelle_selection.x2 = Math.round(selection_actuelle.x2 / zoom * new_zoom);
        nouvelle_selection.y1 = Math.round(selection_actuelle.y1 / zoom * new_zoom);
