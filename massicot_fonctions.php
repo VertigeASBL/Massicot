@@ -141,9 +141,6 @@ function massicoter_document ($fichier) {
 
     include_spip('base/abstract_sql');
     include_spip('inc/documents');
-    include_spip('inc/filtres');
-    include_spip('inc/filtres_images_mini');
-    include_spip('filtres/images_transforme');
 
     $parametres = sql_getfetsel(
         'traitements',
@@ -152,12 +149,44 @@ function massicoter_document ($fichier) {
         ' INNER JOIN spip_documents as D ON (D.id_document = L.id_objet AND L.objet="document")',
         'D.fichier='.sql_quote(set_spip_doc($fichier)));
 
+    return massicoter_fichier($fichier, unserialize($parametres));
+}
+
+/**
+ * Massicoter un objet
+ *
+ * @param string $fichier : Le fichier à massicoter
+ * @param string $objet : Le type d'objet
+ * @param string $id_obejt : L'identifiant de l'objet
+ *
+ * @return string : Un fichier massicoté
+ */
+function massicoter_objet ($fichier, $objet, $id_objet) {
+
+    return massicoter_fichier($fichier, massicot_get_parametres($objet, $id_objet));
+}
+/**
+ * Massicoter un fichier image
+ *
+ * @param string $fichier : Le fichier
+ * @param array $parametres : le tableau des paramètres de massicotage
+ *
+ * @return string : Un fichier massicoté
+ */
+function massicoter_fichier ($fichier, $parametres) {
+
+    include_spip('inc/filtres');
+    include_spip('inc/filtres_images_mini');
+    include_spip('filtres/images_transforme');
+
     /* ne rien faire s'il n'y a pas de massicotage défini */
     if ( ! $parametres) {
         return $fichier;
     }
 
-    $parametres = unserialize($parametres);
+    /* on vire un éventuel query string */
+    $fichier = parse_url($fichier);
+    $fichier = $fichier['path'];
 
     list($width, $height) = getimagesize($fichier);
 
@@ -222,14 +251,48 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
        paramètres de la balise LOGO_, il faut s'assurer que l'image
        qu'on renvoie fait bien la même taille que le logo qu'on a
        reçu. */
-    $balise = image_reduire($balise_img($fichier_massicote),
+    $balise = image_reduire($balise_img($fichier_massicote, '', 'spip_logos'),
                             $largeur_logo, $hauteur_logo);
-
-    $balise = inserer_attribut($balise, 'class', 'spip_logos');
 
     if ($lien) {
         $balise = $lien . $balise . '</a>';
     }
 
     return $balise;
+}
+
+/**
+ * Massicoter un logo
+ *
+ * @param string $fichier : Le logo
+ *
+ * @return string : Un logo massicoté
+ */
+function massicoter_logo ($logo, $connect = null, $objet = array()) {
+
+    include_spip('inc/filtres');
+
+    if ( ! $logo) {
+        return $logo;
+    }
+
+    $fichier = extraire_attribut($logo, 'src');
+
+    /* On cherche une entrée du type id_objet dans le tableau de
+       l'objet, et on s'en sert pour déduire son type et son id */
+    foreach ($objet as $cle => $valeur) {
+        if (strpos($cle, 'id_') === 0) {
+            $objet_type = objet_type($cle);
+            $id_objet = $valeur;
+            break;
+        }
+    }
+
+    $parametres = massicot_get_parametres($objet_type, $id_objet);
+
+    $fichier = massicoter_fichier($fichier, $parametres);
+
+    $balise_img = charger_filtre('balise_img');
+
+    return $balise_img($fichier, '', 'spip_logos');
 }

@@ -31,6 +31,16 @@ function massicot_declarer_tables_interfaces($interfaces) {
     $interfaces['table_des_traitements']['URL_DOCUMENT']['documents'] =
       'massicoter_document(' . $interfaces['table_des_traitements']['FICHIER']['documents'] . ')';
 
+    /* Pour chaque objet éditorial existant, ajouter un traitement sur
+       les logos */
+    foreach (lister_tables_objets_sql() as $table => $valeurs) {
+        if ($table !== 'spip_documents') {
+            $interfaces['table_des_traitements'][strtoupper('LOGO_'.objet_type($table))][] =
+                'massicoter_logo(%s, $connect, $Pile[1])';
+
+        }
+    }
+
     return $interfaces;
 }
 

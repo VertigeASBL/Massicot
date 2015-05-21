@@ -1,7 +1,7 @@
 <div class="apercu">
-	[<div class="spip_logos"><a href="#ENV{logo}" class='mediabox'>(#ENV{logo}|image_reduire{[(#ENV{_options}|table_valeur{image_reduire}|sinon{100})]}|inserer_attribut{alt,#ENV{quoi,logo_on}})</a></div>]
-	#SET{largeur,#ENV{logo}|largeur}
-	#SET{hauteur,#ENV{logo}|hauteur}
+	[<div class="spip_logos"><a href="[(#ENV{logo}|massicoter_objet{#ENV{objet},#ENV{id_objet}})]" class='mediabox'>(#ENV{logo}|massicoter_objet{#ENV{objet},#ENV{id_objet}}|image_reduire{[(#ENV{_options}|table_valeur{image_reduire}|sinon{100})]}|inserer_attribut{alt,#ENV{quoi,logo_on}})</a></div>]
+	#SET{largeur,#ENV{logo}|massicoter_objet{#ENV{objet},#ENV{id_objet}}|largeur}
+	#SET{hauteur,#ENV{logo}|massicoter_objet{#ENV{objet},#ENV{id_objet}}|hauteur}
 	[<div class="titre">(#ENV{titre,''})</div>]
 	<div class="taille"><:info_largeur_vignette{largeur_vignette=#GET{largeur},hauteur_vignette=#GET{hauteur}}:></div>
 	[(#ENV{editable}|oui)
