@@ -291,13 +291,19 @@ function massicoter_logo ($logo, $connect = null, $objet = array()) {
 
     $fichier = extraire_attribut($logo, 'src');
 
-    /* On cherche une entrée du type id_objet dans le tableau de
-       l'objet, et on s'en sert pour déduire son type et son id */
+    /* Pour deviner le type d'objet, on cherche une entrée du type
+       id_objet dans le tableau de l'objet, et on s'en sert pour
+       déduire son type et son id */
     foreach ($objet as $cle => $valeur) {
         if (strpos($cle, 'id_') === 0) {
-            $objet_type = objet_type($cle);
-            $id_objet = $valeur;
-            break;
+            /* id_trad ne correspond pas à un objet */
+            if ( $cle === 'id_trad' ) {
+                continue;
+            } else {
+                $objet_type = objet_type($cle);
+                $id_objet = $valeur;
+                break;
+            }
         }
     }
 
