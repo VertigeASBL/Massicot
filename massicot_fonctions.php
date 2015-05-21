@@ -135,6 +135,7 @@ function massicoter_document ($fichier) {
 
     include_spip('base/abstract_sql');
     include_spip('inc/documents');
+    include_spip('inc/filtres');
     include_spip('inc/filtres_images_mini');
     include_spip('filtres/images_transforme');
 
@@ -177,4 +178,36 @@ function massicoter_document ($fichier) {
         'src');
 
     return $fichier;
+}
+
+/**
+ * Massicoter un logo document
+ *
+ * @param string $fichier : Le logo
+ *
+ * @return string : Un logo massicoté
+ */
+function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
+
+    include_spip('inc/filtres');
+    include_spip('inc/filtres_images_mini');
+
+    /* Si le document en question n'est pas une image, on ne fait rien */
+    if (isset($doc['media']) AND ($doc['media'] !== 'image')) {
+        return $logo;
+    }
+
+    list($largeur_logo, $hauteur_logo) =
+        getimagesize(extraire_attribut($logo, 'src'));
+
+    $balise_img = charger_filtre('balise_img');
+
+    $fichier_massicote = massicoter_document(get_spip_doc($doc['fichier']));
+
+    /* Comme le logo reçu en paramètre peut avoir été réduit grâce aux
+       paramètres de la balise LOGO_, il faut s'assurer que l'image
+       qu'on renvoie fait bien la même taille que le logo qu'on a
+       reçu. */
+    return image_reduire($balise_img($fichier_massicote),
+                         $largeur_logo, $hauteur_logo);
 }
