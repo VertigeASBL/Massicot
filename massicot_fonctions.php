@@ -157,6 +157,10 @@ function massicoter_fichier ($fichier, $parametres) {
                       $parametres['zoom'] * $height),
         'src');
 
+    /* on vire un éventuel query string */
+    $fichier = parse_url($fichier);
+    $fichier = $fichier['path'];
+
     list($width, $height) = getimagesize($fichier);
 
     $fichier = extraire_attribut(
