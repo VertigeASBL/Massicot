@@ -238,8 +238,7 @@ function massicoter_logo_document ($logo, $connect = null, $doc = array()) {
 
     /* Si le document en question n'est pas une image, on ne fait rien */
     if (( ! $logo) OR
-        (isset($doc['mode'])) AND ($doc['mode'] !== 'image') OR
-        (isset($doc['media']) AND ($doc['media'] !== 'image'))) {
+        ( ! in_array($doc['extension'], array('jpg','jpeg','png','gif')))) {
 
         return $logo;
     }
