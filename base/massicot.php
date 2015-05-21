@@ -28,6 +28,9 @@ function massicot_declarer_tables_interfaces($interfaces) {
     $interfaces['table_des_traitements']['LOGO_DOCUMENT'][] =
       'massicoter_logo_document(%s, $connect, $Pile[1])';
 
+    $interfaces['table_des_traitements']['URL_DOCUMENT']['documents'] =
+      'massicoter_document(' . $interfaces['table_des_traitements']['FICHIER']['documents'] . ')';
+
     return $interfaces;
 }
 
