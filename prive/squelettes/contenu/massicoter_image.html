@@ -11,7 +11,8 @@
 
    var img = $('.image-massicot img'),
        imgAreaSelector,
-       initialWidth=img.attr('width');
+       initialWidth=img.attr('width'),
+       zoom;
 
    /* Gestion du recadrage */
    function maj_formulaire (img, selection) {
@@ -29,28 +30,58 @@
         .css('height', 'auto')
         .css('margin-left', '-' + (Math.max((valeur*initialWidth - 780),0) / 2) + 'px' );
 
-     /* On doit gérer le imgAreaSelector après avoir zoomé, sinon on
-        peut avoir des valeurs de recadrage qui semblent trop grandes
-        par rapport à l'image */
+   }
+
+   /* Une fonction pour mettre à jour la sélection lorsqu'on zoom */
+   function maj_selection (new_zoom, zoom) {
+     var selection_actuelle = {
+       x1: $('input[name=x1]').attr('value'),
+       x2: $('input[name=x2]').attr('value'),
+       y1: $('input[name=y1]').attr('value'),
+       y2: $('input[name=y2]').attr('value')
+     },
+         nouvelle_selection = {};
+
      if ( ! imgAreaSelector) {
        imgAreaSelector = img.imgAreaSelect({
          instance: true,
          handles: true,
          show: true,
          onSelectEnd: maj_formulaire,
-         x1: $('input[name=x1]').attr('value'),
-         x2: $('input[name=x2]').attr('value'),
-         y1: $('input[name=y1]').attr('value'),
-         y2: $('input[name=y2]').attr('value')
+         x1: selection_actuelle.x1,
+         x2: selection_actuelle.x2,
+         y1: selection_actuelle.y1,
+         y2: selection_actuelle.y2,
        });
      } else {
+       nouvelle_selection.x1 = Math.round(selection_actuelle.x1 / zoom * new_zoom);
+       nouvelle_selection.x2 = Math.round(selection_actuelle.x2 / zoom * new_zoom);
+       nouvelle_selection.y1 = Math.round(selection_actuelle.y1 / zoom * new_zoom);
+       nouvelle_selection.y2 = Math.round(selection_actuelle.y2 / zoom * new_zoom);
+
        imgAreaSelector.update();
+
+       imgAreaSelector.setSelection(
+         nouvelle_selection.x1,
+         nouvelle_selection.y1,
+         nouvelle_selection.x2,
+         nouvelle_selection.y2
+       );
+
+       maj_formulaire(img, nouvelle_selection);
      }
    }
 
    /* la valeur du zoom agit sur l'image */
    $('input#champ_zoom').change(function (e) {
-     zoomer_image_massicot($(this).attr('value'));
+     var new_zoom = $(this).attr('value');
+
+     /* On doit gérer le imgAreaSelector après avoir zoomé, sinon on
+        peut avoir des valeurs de recadrage qui semblent trop grandes
+        par rapport à l'image */
+     zoomer_image_massicot(new_zoom);
+     maj_selection(new_zoom, zoom);
+     zoom = new_zoom;
    });
 
    /* initialiser le zoom */
