@@ -116,9 +116,9 @@ function massicot_get_parametres ($objet, $id_objet) {
         list($width, $height) = getimagesize($chemin_image);
         return array(
             'zoom' => 1,
-            'x1'    => 0,
+            'x1'   => 0,
             'x2'   => $width,
-            'y1'    => 0,
+            'y1'   => 0,
             'y2'   => $height,
         );
     }
