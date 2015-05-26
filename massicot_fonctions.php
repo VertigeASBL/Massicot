@@ -314,3 +314,39 @@ function massicoter_logo ($logo, $connect = null, $objet = array()) {
 
     return $balise_img($fichier, '', 'spip_logos');
 }
+
+/**
+ * Traitement auto sur les balises #LARGEUR
+ *
+ * @param string $largeur : La largeur renvoyée par la balise
+ *
+ * @return string : La largeur de l'image après massicotage
+ */
+function massicoter_largeur ($largeur, $connect = null, $doc = array()) {
+
+    if (( ! $largeur) OR ( ! isset($doc['id_document']))) {
+        return $largeur;
+    }
+
+    $parametres = massicot_get_parametres('document', $doc['id_document']);
+
+    return (string) round(($parametres['x2'] - $parametres['x1']) * $parametres['zoom']);
+}
+
+/**
+ * Traitement auto sur les balises #HAUTEUR
+ *
+ * @param string $hauteur : La hauteur renvoyée par la balise
+ *
+ * @return string : La hauteur de l'image après massicotage
+ */
+function massicoter_hauteur ($hauteur, $connect = null, $doc = array()) {
+
+    if (( ! $hauteur) OR ( ! isset($doc['id_document']))) {
+        return $hauteur;
+    }
+
+    $parametres = massicot_get_parametres('document', $doc['id_document']);
+
+    return (string) round(($parametres['y2'] - $parametres['y1']) * $parametres['zoom']);
+}

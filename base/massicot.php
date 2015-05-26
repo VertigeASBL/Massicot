@@ -31,6 +31,12 @@ function massicot_declarer_tables_interfaces($interfaces) {
     $interfaces['table_des_traitements']['URL_DOCUMENT']['documents'] =
       'massicoter_document(' . $interfaces['table_des_traitements']['FICHIER']['documents'] . ')';
 
+    /* On traîte aussi les balises #HAUTEUR et #LARGEUR des documents */
+    $interfaces['table_des_traitements']['LARGEUR']['documents'] =
+      'massicoter_largeur(%s, $connect, $Pile[1])';
+    $interfaces['table_des_traitements']['HAUTEUR']['documents'] =
+      'massicoter_hauteur(%s, $connect, $Pile[1])';
+
     /* Pour chaque objet éditorial existant, ajouter un traitement sur
        les logos */
     foreach (lister_tables_objets_sql() as $table => $valeurs) {
