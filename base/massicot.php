@@ -83,18 +83,18 @@ function massicot_declarer_tables_principales ($tables_principales) {
  */
 function massicot_declarer_tables_auxiliaires ($tables_auxiliaires) {
 
-	$tables_auxiliaires['spip_massicotages_liens'] = array(
-		'field' => array(
-			"id_massicotage" => "bigint(21) DEFAULT '0' NOT NULL",
-			"id_objet"       => "bigint(21) DEFAULT '0' NOT NULL",
-			"objet"          => "VARCHAR(25) DEFAULT '' NOT NULL",
-			"vu"             => "VARCHAR(6) DEFAULT 'non' NOT NULL"
-		),
-		'key' => array(
-			"PRIMARY KEY"        => "id_massicotage,id_objet,objet",
-			"KEY id_massicotage" => "id_massicotage",
-		),
-	);
+    $tables_auxiliaires['spip_massicotages_liens'] = array(
+        'field' => array(
+            "id_massicotage" => "bigint(21) DEFAULT '0' NOT NULL",
+            "id_objet"       => "bigint(21) DEFAULT '0' NOT NULL",
+            "objet"          => "VARCHAR(25) DEFAULT '' NOT NULL",
+            "vu"             => "VARCHAR(6) DEFAULT 'non' NOT NULL"
+        ),
+        'key' => array(
+            "PRIMARY KEY"        => "id_massicotage,id_objet,objet",
+            "KEY id_massicotage" => "id_massicotage",
+        ),
+    );
 
     return $tables_auxiliaires;
 }

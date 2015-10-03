@@ -8,17 +8,12 @@
 	documentation=""
 	schema="1.0.0" 
 >
-	<!--
-		Paquet genere le 2015-05-12 17:26:19
-	-->
 
 	<nom>Massicot</nom>
 
 	<auteur lien='http://vertige.org'>Michel @ Vertige ASBL</auteur>
 
 	<licence>GNU/GPL</licence>
-
-	<pipeline nom="autoriser" inclure="massicot_autorisations.php" /> 
 
   <pipeline nom="declarer_tables_interfaces"  inclure="base/massicot.php" />
   <pipeline nom="declarer_tables_principales" inclure="base/massicot.php" />
