@@ -57,3 +57,18 @@ function massicot_header_prive ($flux) {
 
     return $flux;
 }
+
+/**
+ * Ajouter une action "recadrer" sur les documents
+ *
+ * @pipeline editer_document_actions
+ * @param  array $flux Données du pipeline
+ * @return array       Données du pipeline
+ */
+function massicot_document_desc_actions ($flux) {
+
+    $flux['data'] .= recuperer_fond('prive/squelettes/inclure/lien_recadre',
+                                    $flux['args']);
+
+    return $flux;
+}
