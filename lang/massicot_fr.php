@@ -12,6 +12,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
     'massicot_titre' => 'Massicot',
     'massicoter' => "Recadrer l'image",
 
+    // R
+    'reinitialiser' => 'Réinitialiser',
+
     // Z
     'zoom' => 'Zoom',
 );
